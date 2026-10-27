@@ -1,0 +1,33 @@
+# Secrets and private configuration
+.env
+.env.*
+!.env.example
+.tastematch-config.php
+*-groq-key.php
+*-qloo-key.php
+
+# Hosting and editor files
+.cpanel.yml
+.ftpconfig
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Logs, caches, backups, archives, and local media
+*.log
+*.cache
+*.bak
+*.backup
+*.sql
+*.tar
+*.tar.gz
+*.zip
+*.mp3
+*.mp4
+*.wav
+*.webm
+tmp/
+temp/
+
+
