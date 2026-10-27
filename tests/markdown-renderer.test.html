@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>TasteMatch Markdown renderer test</title>
+  <script src="../vendor/marked.min.js"></script>
+  <script src="../vendor/purify.min.js"></script>
+  <script src="../markdown-renderer.js"></script>
+</head>
+<body>
+  <main id="fixture"></main>
+  <output id="result">Running…</output>
+  <script>
+    const markdownFixture = [
+      '# Heading',
+      '**Bold** and [safe link](https://example.com)',
+      '- one',
+      '- two',
+      '',
+      '| Name | Score |',
+      '| --- | ---: |',
+      '| Dune | 10 |',
+      '',
+      '```js',
+      'const safe = true;',
+      '```',
+      '',
+      '<img src=x onerror="window.__xss = true">',
+      '<script>window.__xss = true<\/script>',
+      '[unsafe](javascript:window.__xss=true)'
+    ].join('\n');
+    const html = window.TasteMatchMarkdown.render(markdownFixture);
+    const fixture = document.getElementById('fixture');
+    fixture.innerHTML = html;
+    const checks = {
+      heading: Boolean(fixture.querySelector('h1')),
+      bold: Boolean(fixture.querySelector('strong')),
+      list: Boolean(fixture.querySelector('ul li')),
+      table: Boolean(fixture.querySelector('table th')),
+      code: Boolean(fixture.querySelector('pre code')),
+      link: Boolean(fixture.querySelector('a[href="https://example.com"]')),
+      noScript: !fixture.querySelector('script'),
+      noImage: !fixture.querySelector('img'),
+      noUnsafeHref: !Array.from(fixture.querySelectorAll('a')).some(a => /^javascript:/i.test(a.getAttribute('href') || '')),
+      noExecution: window.__xss !== true
+    };
+    const passed = Object.values(checks).every(Boolean);
+    const result = document.getElementById('result');
+    result.dataset.passed = String(passed);
+    result.textContent = (passed ? 'PASS' : 'FAIL') + ' ' + JSON.stringify(checks);
+    document.title = (passed ? 'PASS' : 'FAIL') + ' — TasteMatch Markdown renderer test';
+  </script>
+</body>
+</html>
+
