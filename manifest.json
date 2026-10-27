@@ -1,0 +1,22 @@
+{
+  "id": "./",
+  "name": "TasteMatch AI",
+  "short_name": "TasteMatch",
+  "description": "Discover cultural recommendations with live Qloo taste signals and optional Groq AI chat.",
+  "start_url": "./?source=installed-app",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#07150e",
+  "theme_color": "#0d4142",
+  "categories": ["entertainment", "lifestyle"],
+  "icons": [
+    {
+      "src": "./favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
+
